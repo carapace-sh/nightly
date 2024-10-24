@@ -25,7 +25,7 @@ jobs:
         uses: goreleaser/goreleaser-action@v5
         with:
           version: '~> v2'
-          args: release --clean --skip announce,aur,chocolatey,docker,homebrew,ko,nfpm,nix,notarize,publish,sbom,scoop,sign,snapcraft,validate,winget
+          args: release --snapshot --clean --skip announce,aur,chocolatey,docker,homebrew,ko,nfpm,nix,notarize,publish,sbom,scoop,sign,snapcraft,validate,winget
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
