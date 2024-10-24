@@ -35,6 +35,6 @@ jobs:
       - name: upload archives
         run: |
           gh release create --repo carapace-sh/carapace-nightly "$(date +%Y-%m-%d)" || true
-          gh release upload "$(date +%Y-%m-%d)" dist/*.zip dist/*.tar.gz dist/carapace-bin_checksums.txt
+          gh release upload --repo carapace-sh/carapace-nightly "$(date +%Y-%m-%d)" dist/*.zip dist/*.tar.gz dist/carapace-bin_checksums.txt
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
