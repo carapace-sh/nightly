@@ -1,0 +1,11 @@
+name: carapace-shlex nightly
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  build:
+    uses: ./.github/workflows/nightly-template.yml
+    with:
+      repo: carapace-shlex
