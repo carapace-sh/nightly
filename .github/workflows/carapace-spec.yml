@@ -1,4 +1,4 @@
-name: carapace-bin nightly
+name: carapace-spec nightly
 
 on:
   schedule:
@@ -8,4 +8,4 @@ jobs:
   build:
     uses: ./.github/workflows/nightly-template.yml
     with:
-      repo: carapace-bin
+      repo: carapace-spec

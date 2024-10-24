@@ -1,0 +1,43 @@
+name: nightly template
+
+on:
+  workflow_call:
+    inputs:
+      repo:
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: ghcr.io/carapace-sh/go:1.23.0
+    steps:
+      - name: deep clone
+        uses: actions/checkout@v4
+        with:
+          repository: carapace-sh/${{ inputs.repo }}
+          fetch-depth: 0
+
+      - name: fix git safe.directory
+        run:  git config --global --add safe.directory '*'
+
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v5
+        with:
+          version: '~> v2'
+          args: release --clean --skip announce,aur,chocolatey,docker,homebrew,ko,nfpm,nix,notarize,publish,sbom,scoop,sign,snapcraft,validate,winget
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: rename checksums.txt
+        run: mv dist/checksums.txt dist/${{ inputs.repo }}_checksums.txt
+
+      - name: install gh
+        run: apt-get update && apt-get install -y gh
+
+      - name: upload archives
+        run: |
+          gh release create --repo carapace-sh/nightly "$(date +%Y-%m-%d)" || true
+          gh release upload --repo carapace-sh/nightly "$(date +%Y-%m-%d)" --clobber dist/*.zip dist/*.tar.gz dist/*_checksums.txt
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
