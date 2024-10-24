@@ -32,12 +32,15 @@ jobs:
       - name: rename checksums.txt
         run: mv dist/checksums.txt dist/${{ inputs.repo }}_checksums.txt
 
+      - name: store commit id
+        run: git rev-parse HEAD > dist/${{ inputs.repo }}_commit.txt
+
       - name: install gh
         run: apt-get update && apt-get install -y gh
 
       - name: upload archives
         run: |
           gh release create --repo carapace-sh/nightly "$(date +%Y-%m-%d)" || true
-          gh release upload --repo carapace-sh/nightly "$(date +%Y-%m-%d)" --clobber dist/*.zip dist/*.tar.gz dist/*_checksums.txt
+          gh release upload --repo carapace-sh/nightly "$(date +%Y-%m-%d)" --clobber dist/*.zip dist/*.tar.gz dist/*_checksums.txt dist/*_commit.txt
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
