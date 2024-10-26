@@ -40,7 +40,8 @@ jobs:
 
       - name: upload archives
         run: |
-          gh release create --repo carapace-sh/nightly "$(date +%Y-%m-%d)" || true
-          gh release upload --repo carapace-sh/nightly "$(date +%Y-%m-%d)" --clobber dist/*.zip dist/*.tar.gz dist/*_checksums.txt dist/*_commit.txt
+          tag="$(date +%Y-%m-%d)"
+          gh release create --repo carapace-sh/nightly --title "${tag}" --notes "-" "${tag}" || true
+          gh release upload --repo carapace-sh/nightly --title "${tag}" --notes "-" "${tag}" --clobber dist/*.zip dist/*.tar.gz dist/*_checksums.txt dist/*_commit.txt
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
