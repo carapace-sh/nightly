@@ -1,0 +1,17 @@
+name: release
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: create release
+        run: |
+          tag="$(date +%Y-%m-%d)"
+          gh release create --repo carapace-sh/nightly --title "${tag}" --notes "-" "${tag}" || true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
