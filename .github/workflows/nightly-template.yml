@@ -29,9 +29,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: store commit id
-        run: git rev-parse HEAD > dist/${{ inputs.repo }}_commit.txt
-
       - name: install gh
         run: apt-get update && apt-get install -y gh
 
@@ -39,6 +36,6 @@ jobs:
         run: |
           tag="$(date +%Y-%m-%d)"
           gh release create --repo carapace-sh/nightly --title "${tag}" --notes "-" "${tag}" || true
-          gh release upload --repo carapace-sh/nightly "${tag}" --clobber dist/*.zip dist/*.tar.gz dist/*_checksums.txt dist/*_commit.txt
+          gh release upload --repo carapace-sh/nightly "${tag}" --clobber dist/*.zip dist/*.tar.gz dist/*_checksums.txt
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
