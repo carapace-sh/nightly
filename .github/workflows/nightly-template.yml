@@ -29,9 +29,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: rename checksums.txt
-        run: mv dist/checksums.txt dist/${{ inputs.repo }}_checksums.txt
-
       - name: store commit id
         run: git rev-parse HEAD > dist/${{ inputs.repo }}_commit.txt
 
