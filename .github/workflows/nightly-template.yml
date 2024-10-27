@@ -11,7 +11,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container: ghcr.io/carapace-sh/go:1.23.0
-    needs: [release]
     steps:
       - name: deep clone
         uses: actions/checkout@v4
