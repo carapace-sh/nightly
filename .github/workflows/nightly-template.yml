@@ -11,6 +11,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container: ghcr.io/carapace-sh/go:1.23.0
+    needs: [release]
     steps:
       - name: deep clone
         uses: actions/checkout@v4
@@ -34,8 +35,6 @@ jobs:
 
       - name: upload archives
         run: |
-          tag="$(date +%Y-%m-%d)"
-          gh release create --repo carapace-sh/nightly --title "${tag}" --notes "-" "${tag}" || true
-          gh release upload --repo carapace-sh/nightly "${tag}" --clobber dist/*.zip dist/*.tar.gz dist/*_checksums.txt
+          gh release upload --repo carapace-sh/nightly "$(date +%Y-%m-%d)" --clobber dist/*.zip dist/*.tar.gz dist/*_checksums.txt
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
