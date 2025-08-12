@@ -13,7 +13,7 @@ jobs:
     container: ghcr.io/carapace-sh/go:1.23.1
     steps:
       - name: deep clone
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: carapace-sh/${{ inputs.repo }}
           fetch-depth: 0
