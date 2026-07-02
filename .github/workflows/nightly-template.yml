@@ -10,7 +10,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: ghcr.io/carapace-sh/go:1.25.4
+    container: ghcr.io/carapace-sh/go:1.26.3
     steps:
       - name: deep clone
         uses: actions/checkout@v7
